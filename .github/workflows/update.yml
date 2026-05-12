@@ -1,4 +1,4 @@
-name: 更新估值表
+name: 更新指数估值表
 on:
   push:
     branches: [ main ]
@@ -6,17 +6,35 @@ on:
     - cron: '0 1 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write # 关键：给Actions写入权限，解决128错误
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 设置Python环境
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -r requirements.txt
-      - run: python main.py
-      - uses: peaceiris/actions-gh-pages@v4
+          cache: 'pip'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 运行估值表生成脚本
+        run: python main.py
+
+      - name: 部署到GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
+          cname: "" # 清空自定义域名，避免冲突
