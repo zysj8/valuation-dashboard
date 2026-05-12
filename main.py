@@ -3,11 +3,9 @@ import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import os
 
-# 确保模板目录存在
 if not os.path.exists("templates"):
     os.makedirs("templates")
 
-# ---------------------- 指数列表（包含可获取估值的指数代码） ----------------------
 index_list = [
     {"category": "宽基指数", "name": "上证50", "code": "000016", "etf": "510050", "lof": "001051"},
     {"category": "宽基指数", "name": "沪深300", "code": "000300", "etf": "510300", "lof": "160706"},
@@ -26,30 +24,19 @@ index_list = [
     {"category": "行业指数", "name": "中证新能源", "code": "399808", "etf": "516850", "lof": "012769"},
 ]
 
-# ---------------------- 修复版估值获取函数 ----------------------
 def get_valuation(code):
     try:
-        # 直接用akshare的指数估值接口
         df = ak.stock_zh_index_valuation(symbol=code)
         if df.empty:
-            print(f"{code} 接口返回空数据")
             return "-", "-"
-        
-        # 取最新一行数据
-        latest = df.iloc[-1]
-        pe_pct = float(latest["pe_percentile"]) * 100
-        pb_pct = float(latest["pb_percentile"]) * 100
-        
-        # 计算长投温度
+        pe_pct = df["pe_percentile"].iloc[-1] * 100
+        pb_pct = df["pb_percentile"].iloc[-1] * 100
         long_temp = round((pe_pct + pb_pct) / 2, 1)
         pb_temp = round(pb_pct, 1)
-        
         return long_temp, pb_temp
-    except Exception as e:
-        print(f"{code} 获取失败: {str(e)}")
+    except:
         return "-", "-"
 
-# ---------------------- 组装数据 ----------------------
 rows = []
 for idx in index_list:
     lt, pbt = get_valuation(idx["code"])
@@ -62,7 +49,6 @@ for idx in index_list:
         "pbt": pbt
     })
 
-# ---------------------- 生成HTML ----------------------
 env = Environment(loader=FileSystemLoader("templates"))
 template = env.get_template("index.html")
 
@@ -74,4 +60,4 @@ html = template.render(
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ 估值表生成完成！")
+print("✅ 生成完成")
