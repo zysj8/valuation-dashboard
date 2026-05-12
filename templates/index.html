@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指数估值温度表</title>
+<style>
+body{font-family:Microsoft YaHei;margin:20px;background:#f6f7f9}
+.container{max-width:900px;margin:auto;background:white;padding:15px;border-radius:10px}
+.title{text-align:center;font-size:22px;margin-bottom:5px}
+.time{text-align:center;color:#666;margin-bottom:15px}
+table{width:100%;border-collapse:collapse}
+td,th{padding:10px;text-align:center;border-bottom:1px solid #eee}
+th{background:#f2f2f2}
+.cate{background:#eef2f5;font-weight:bold;text-align:left}
+.blue{background:#007bff;color:white}
+.yellow{background:#ffc107}
+.orange{background:#fd7e14;color:white}
+.red{background:#dc3545;color:white}
+.gray{background:#f2f2f2}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title">📈 指数估值温度表（长投温度）</div>
+<div class="time">更新时间：{{ time }}</div>
+<table>
+<tr><th>指数</th><th>场内ETF</th><th>场外LOF</th><th>长投温度</th></tr>
+{% set cc = None %}
+{% for r in rows %}
+{% if r.c != cc %}
+{% set cc = r.c %}
+<tr><td colspan="4" class="cate">{{ r.c }}</td></tr>
+{% endif %}
+<tr>
+<td>{{ r.name }}</td>
+<td>{{ r.etf }}</td>
+<td>{{ r.lof }}</td>
+{% if r.lt == '-' %}
+<td class="gray">-</td>
+{% elif r.lt <= 30 %}
+<td class="blue">{{ r.lt }}</td>
+{% elif r.lt <= 40 %}
+<td class="yellow">{{ r.lt }}</td>
+{% elif r.lt <= 50 %}
+<td class="orange">{{ r.lt }}</td>
+{% else %}
+<td class="red">{{ r.lt }}</td>
+{% endif %}
+</tr>
+{% endfor %}
+</table>
+</div>
+</body>
+</html>
