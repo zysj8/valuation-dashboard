@@ -1,4 +1,4 @@
-<details> <summary>import json
+import json
 import os
 import subprocess
 
@@ -94,4 +94,4 @@ def generate_html():
     print("HTML 生成成功: index.html")
 
 if __name__ == "__main__":
-    generate_html()</summary></details>
+    generate_html()
