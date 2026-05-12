@@ -1,4 +1,4 @@
-<details> <summary>import akshare as ak
+import akshare as ak
 import pandas as pd
 import numpy as np
 import json
@@ -149,4 +149,4 @@ def get_category(name):
         return "其他"
 
 if __name__ == "__main__":
-    main()</summary></details>
+    main()
