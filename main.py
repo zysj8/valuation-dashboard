@@ -7,7 +7,7 @@ import os
 if not os.path.exists("templates"):
     os.makedirs("templates")
 
-# ---------------------- 指数列表（补齐所有基金代码） ----------------------
+# ---------------------- 指数列表（包含可获取估值的指数代码） ----------------------
 index_list = [
     {"category": "宽基指数", "name": "上证50", "code": "000016", "etf": "510050", "lof": "001051"},
     {"category": "宽基指数", "name": "沪深300", "code": "000300", "etf": "510300", "lof": "160706"},
@@ -20,29 +20,33 @@ index_list = [
     {"category": "策略指数", "name": "深证红利", "code": "399324", "etf": "159905", "lof": "481012"},
     {"category": "策略指数", "name": "基本面50", "code": "000925", "etf": "160716", "lof": "160716"},
 
-    {"category": "境外指数", "name": "恒生指数", "code": "HSI", "etf": "159920", "lof": "164705"},
-    {"category": "境外指数", "name": "恒生科技", "code": "HSI", "etf": "513130", "lof": "014425"},
-    {"category": "境外指数", "name": "纳斯达克100", "code": "NDX", "etf": "513100", "lof": "160213"},
-    {"category": "境外指数", "name": "标普500", "code": "SPX", "etf": "513500", "lof": "050025"},
-
     {"category": "行业指数", "name": "证券公司", "code": "399975", "etf": "512000", "lof": "004069"},
     {"category": "行业指数", "name": "中证医疗", "code": "399989", "etf": "512170", "lof": "005056"},
     {"category": "行业指数", "name": "中证消费", "code": "000932", "etf": "159928", "lof": "000248"},
     {"category": "行业指数", "name": "中证新能源", "code": "399808", "etf": "516850", "lof": "012769"},
-
-    {"category": "债券&商品", "name": "国债10年", "code": "000012", "etf": "511260", "lof": "-"},
-    {"category": "债券&商品", "name": "黄金", "code": "AU9999", "etf": "518880", "lof": "000216"},
 ]
 
-# ---------------------- 获取估值 ----------------------
+# ---------------------- 修复版估值获取函数 ----------------------
 def get_valuation(code):
     try:
+        # 直接用akshare的指数估值接口
         df = ak.stock_zh_index_valuation(symbol=code)
-        pe_pct = df["pe_percentile"].iloc[-1] * 100
-        pb_pct = df["pb_percentile"].iloc[-1] * 100
-        long_temp = (pe_pct + pb_pct) / 2
-        return round(long_temp, 1), round(pb_pct, 1)
-    except:
+        if df.empty:
+            print(f"{code} 接口返回空数据")
+            return "-", "-"
+        
+        # 取最新一行数据
+        latest = df.iloc[-1]
+        pe_pct = float(latest["pe_percentile"]) * 100
+        pb_pct = float(latest["pb_percentile"]) * 100
+        
+        # 计算长投温度
+        long_temp = round((pe_pct + pb_pct) / 2, 1)
+        pb_temp = round(pb_pct, 1)
+        
+        return long_temp, pb_temp
+    except Exception as e:
+        print(f"{code} 获取失败: {str(e)}")
         return "-", "-"
 
 # ---------------------- 组装数据 ----------------------
@@ -70,4 +74,4 @@ html = template.render(
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ 生成完成")
+print("✅ 估值表生成完成！")
