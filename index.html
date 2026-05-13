@@ -15,6 +15,18 @@ td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
 .blue{background:#007bff;color:white}
 .red{background:#dc3545;color:white}
 
+/* 关键修改：固定温度列宽度，统一所有温度块长度 */
+td:last-child {
+    width: 120px; /* 固定宽度，和原图一致 */
+}
+td.blue, td.red {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border-radius: 4px;
+}
+
 /* 温度图例样式 */
 .legend{
     display: flex;
@@ -38,7 +50,7 @@ td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
 <body>
 <div class="container">
 <div class="title">📈 指数估值温度表</div>
-<div class="time">更新时间：2026-05-13 00:52</div>
+<div class="time">更新时间：2026-05-13 00:56</div>
 
 
 
@@ -441,7 +453,7 @@ td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
 </table>
 
 
-<!-- 底部温度区间图例（已恢复） -->
+<!-- 底部温度区间图例 -->
 <div class="legend">
     <div class="legend-item">
         <div class="legend-color" style="background:#007bff;"></div>
