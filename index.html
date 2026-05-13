@@ -41,30 +41,30 @@ body {
     margin-bottom: 25px;
 }
 
-/* 关键：所有表格宽度强制100%，且列宽固定 */
+/* 关键：固定表格布局，列宽用像素精准控制 */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 25px;
-    table-layout: fixed; /* 强制表格固定布局，防止错位 */
+    table-layout: fixed;
 }
 
-/* 列宽定义，全局统一 */
-th:nth-child(1), td:nth-child(1) { width: 35%; }
-th:nth-child(2), td:nth-child(2) { width: 20%; }
-th:nth-child(3), td:nth-child(3) { width: 20%; }
-th:nth-child(4), td:nth-child(4) { width: 25%; }
+/* 像素级精准列宽，和你原图比例一致 */
+th:nth-child(1), td:nth-child(1) { width: 280px; } /* 指数名称列 */
+th:nth-child(2), td:nth-child(2) { width: 200px; } /* 场内代码列 */
+th:nth-child(3), td:nth-child(3) { width: 200px; } /* 场外代码列 */
+th:nth-child(4), td:nth-child(4) { width: 220px; } /* 温度列 */
 
 th, td {
     padding: 14px 10px;
-    text-align: center; /* 所有列居中对齐 */
+    text-align: center;
     border-bottom: 1px solid #eee;
     font-size: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* 指数名称列单独左对齐 */
+/* 指数名称列左对齐 */
 td:first-child {
     text-align: left;
     padding-left: 15px;
@@ -82,7 +82,7 @@ th {
     color: #333;
 }
 
-/* 温度色块修复：强制居中+固定尺寸 */
+/* 温度色块完美居中 */
 .temp-block {
     display: inline-flex;
     align-items: center;
@@ -98,7 +98,7 @@ th {
 .blue { background-color: #007bff; }
 .red { background-color: #dc3545; }
 
-/* 基金代码颜色美化 */
+/* 场内代码颜色美化 */
 td:nth-child(2) {
     color: #0066cc;
     font-weight: 500;
@@ -130,7 +130,7 @@ td:nth-child(2) {
 <body>
 <div class="container">
 <div class="title">📈 指数估值温度表</div>
-<div class="time">更新时间：2026-05-13 01:18</div>
+<div class="time">更新时间：2026-05-13 01:21</div>
 
 
 
