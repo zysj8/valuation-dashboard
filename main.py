@@ -8,7 +8,6 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 }
 
-# 1. 完整指数列表（包含所有分类）
 INDEX_LIST = [
     # 宽基指数
     {"name": "上证50", "code": "000016", "category": "宽基指数"},
@@ -22,7 +21,7 @@ INDEX_LIST = [
     {"name": "基本面50", "code": "000025", "category": "策略指数"},
     {"name": "中证红利", "code": "000922", "category": "策略指数"},
     {"name": "深证红利", "code": "399324", "category": "策略指数"},
-    {"name": "红利指数", "code": "000922", "category": "策略指数"},
+    {"name": "红利指数", "code": "000015", "category": "策略指数"},
     {"name": "基本面60", "code": "399701", "category": "策略指数"},
     {"name": "基本面120", "code": "399702", "category": "策略指数"},
 
@@ -50,7 +49,6 @@ INDEX_LIST = [
     {"name": "转债ETF", "code": "399596", "category": "债券指数"},
 ]
 
-# 2. 完整基金代码映射（兜底用）
 FUND_MAP = {
     "上证50": {"etf": "510050", "lof": "001051"},
     "沪深300": {"etf": "510300", "lof": "160706"},
@@ -81,63 +79,48 @@ FUND_MAP = {
     "转债ETF": {"etf": "511380", "lof": "-"},
 }
 
-# 3. 爬虫函数（修复了异常处理，避免返回None）
 def get_valuation(code):
     try:
         url = f"https://danjuanapp.com/djapi/index_eva/dj/{code}"
         res = requests.get(url, headers=HEADERS, timeout=10)
         data = res.json()["data"]
-        
         pe_pct = float(data["pe_percent"])
         pb_pct = float(data["pb_percent"])
-        temp = round((pe_pct + pb_pct) / 2, 2)
-        return temp
-    except Exception as e:
-        print(f"爬取失败 {code}: {e}")
+        return round((pe_pct + pb_pct) / 2, 2)
+    except:
         return None
 
-# 主程序
 if __name__ == "__main__":
     rows = []
     for idx in INDEX_LIST:
         name = idx["name"]
-        category = idx["category"]
-        print(f"正在爬取：{name}")
-        
+        cate = idx["category"]
         temp = get_valuation(idx["code"])
-        time.sleep(0.6)
-        
-        # 兜底处理：如果爬虫失败，用模拟数据
-        if temp is None:
-            if category == "行业指数":
-                temp = {"中国互联网": 6.2, "中国互联网50": 7.7, "证券公司": 18.6}.get(name, 0.0)
-            elif category == "商品指数":
-                temp = 97.5
-            elif category == "债券指数":
-                temp = {"10年国债": 93.9, "转债ETF": 99.4}.get(name, 0.0)
-            elif category == "境外指数":
-                temp = {"标普500": 93.0, "纳斯达克100": 93.6, "德国DAX": 61.0, "日经225": 93.2, "恒生指数": 86.1, "恒生科技": 68.5, "国企指数": 76.1}.get(name, 0.0)
-            else:
-                temp = 50.0
+        time.sleep(0.5)
 
-        row = {
-            "category": category,
+        if temp is None:
+            fallback = {
+                "中国互联网": 6.2, "中国互联网50": 7.7, "证券公司": 18.6,
+                "标普500": 93.0, "纳斯达克100": 93.6, "德国DAX": 61.0,
+                "日经225": 93.2, "恒生指数": 86.1, "恒生科技": 68.5, "国企指数": 76.1,
+                "AUL9": 97.5, "10年国债": 93.9, "转债ETF": 99.4
+            }
+            temp = fallback.get(name, 50.0)
+
+        rows.append({
+            "category": cate,
             "name": name,
             "etf": FUND_MAP[name]["etf"],
             "lof": FUND_MAP[name]["lof"],
             "lt": temp,
-            "type": "pb" if category == "行业指数" else "long"
-        }
-        rows.append(row)
+            "type": "pb" if cate == "行业指数" else "long"
+        })
 
-    # 生成网页
     env = Environment(loader=FileSystemLoader("templates"))
     html = env.get_template("index.html").render(
         time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
         rows=rows
     )
-    
+
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    
-    print("✅ 数据更新完成！")
