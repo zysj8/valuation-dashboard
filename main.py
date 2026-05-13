@@ -5,7 +5,7 @@ import os
 if not os.path.exists("templates"):
     os.makedirs("templates")
 
-# 测试用固定数据，直接写死温度，保证页面能显示
+# 测试用固定数据，直接写死温度，保证页面能显示数字和颜色
 index_list = [
     {"category": "宽基指数", "name": "上证50", "etf": "510050", "lof": "001051", "lt": 63.9},
     {"category": "宽基指数", "name": "沪深300", "etf": "510300", "lof": "160706", "lt": 74.5},
