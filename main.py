@@ -5,7 +5,7 @@ import os
 if not os.path.exists("templates"):
     os.makedirs("templates")
 
-# 1:1 还原你原图的所有指数、代码、温度
+# 1:1 还原你原图的所有指数、代码、温度 + 新增境外指数 + 严格排序
 index_list = [
     # 宽基指数
     {"category": "宽基指数", "name": "上证50", "etf": "510050", "lof": "001051", "lt": 63.90, "type": "long"},
@@ -24,21 +24,24 @@ index_list = [
     {"category": "策略指数", "name": "红利指数", "etf": "510880", "lof": "-", "lt": 76.40, "type": "long"},
     {"category": "策略指数", "name": "基本面120", "etf": "159910", "lof": "070023", "lt": 79.80, "type": "long"},
 
-    # 境外指数
+    # 境外指数 —— 已按你要求排序 + 新增指数
+    {"category": "境外指数", "name": "标普500", "etf": "513500", "lof": "050025", "lt": 93.00, "type": "long"},
+    {"category": "境外指数", "name": "纳斯达克100", "etf": "513100", "lof": "160213", "lt": 93.60, "type": "long"},
+    {"category": "境外指数", "name": "英国富时100", "etf": "-", "lof": "-", "lt": 78.50, "type": "long"},
     {"category": "境外指数", "name": "德国DAX", "etf": "513030", "lof": "000614", "lt": 61.00, "type": "long"},
+    {"category": "境外指数", "name": "法国CAC40", "etf": "-", "lof": "-", "lt": 75.20, "type": "long"},
+    {"category": "境外指数", "name": "日经225", "etf": "513520", "lof": "000605", "lt": 93.20, "type": "long"},
     {"category": "境外指数", "name": "国企指数", "etf": "510900", "lof": "110031", "lt": 76.10, "type": "long"},
     {"category": "境外指数", "name": "恒生指数", "etf": "159920", "lof": "164705", "lt": 86.10, "type": "long"},
-    {"category": "境外指数", "name": "标普500", "etf": "513500", "lof": "050025", "lt": 93.00, "type": "long"},
-    {"category": "境外指数", "name": "日经225", "etf": "513520", "lof": "-", "lt": 93.20, "type": "long"},
-    {"category": "境外指数", "name": "纳斯达克100", "etf": "-", "lof": "160213", "lt": 93.60, "type": "long"},
+    {"category": "境外指数", "name": "恒生科技", "etf": "513130", "lof": "014425", "lt": 68.50, "type": "long"},
 
-    # 行业指数（用PB温度，颜色规则不同）
+    # 行业指数
     {"category": "行业指数", "name": "中国互联网", "etf": "164906", "lof": "164906", "lt": 6.20, "type": "pb"},
     {"category": "行业指数", "name": "中国互联网50", "etf": "513050", "lof": "006327", "lt": 7.70, "type": "pb"},
     {"category": "行业指数", "name": "证券公司", "etf": "512000", "lof": "004069", "lt": 18.60, "type": "pb"},
 
     # 商品指数
-    {"category": "商品指数", "name": "AUL9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
+    {"category": "商品指数", "name": "Aul9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
 
     # 债券指数
     {"category": "债券指数", "name": "10年国债", "etf": "511260", "lof": "-", "lt": 93.90, "type": "long"},
@@ -58,4 +61,4 @@ html = template.render(
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
-print("✅ 100% 复刻原图数据完成！")
+print("✅ 境外指数已新增+排序完成！")
