@@ -5,49 +5,125 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>指数估值温度表</title>
 <style>
-body{font-family:Microsoft YaHei;margin:20px;background:#fff}
-.container{max-width:900px;margin:auto;background:#fff;padding:0}
-.title{text-align:center;font-size:22px;margin-bottom:5px}
-.time{text-align:center;color:#666;margin-bottom:15px}
-table{width:100%;border-collapse:collapse;margin-bottom:20px}
-td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
-.cate-name{text-align:left;font-weight:bold}
-
-/* —————————— 核心修复：所有温度色块强制统一大小 —————————— */
-td.temp-cell {
-    width: 140px !important;       /* 固定温度列宽度 */
-    padding: 6px !important;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    margin: 20px;
+    background-color: #f0f2f5;
+}
+
+.container {
+    max-width: 950px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.time {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+/* 关键：所有表格宽度强制100%，且列宽固定 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    table-layout: fixed; /* 强制表格固定布局，防止错位 */
+}
+
+/* 列宽定义，全局统一 */
+th:nth-child(1), td:nth-child(1) { width: 35%; }
+th:nth-child(2), td:nth-child(2) { width: 20%; }
+th:nth-child(3), td:nth-child(3) { width: 20%; }
+th:nth-child(4), td:nth-child(4) { width: 25%; }
+
+th, td {
+    padding: 14px 10px;
+    text-align: center; /* 所有列居中对齐 */
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 指数名称列单独左对齐 */
+td:first-child {
+    text-align: left;
+    padding-left: 15px;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #333;
+}
+
+.cate-name {
+    text-align: left;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 温度色块修复：强制居中+固定尺寸 */
 .temp-block {
-    display: inline-block;
-    width: 130px !important;        /* 色块统一宽度 */
-    height: 32px !important;        /* 色块统一高度 */
-    line-height: 32px;              /* 文字垂直居中 */
-    text-align: center;             /* 文字水平居中 */
-    border-radius: 4px;             /* 圆角 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
     color: white;
-    font-weight: normal;
+    font-weight: 500;
 }
-.blue { background: #007bff; }
-.red { background: #dc3545; }
 
-/* 图例样式 */
-.legend{
+.blue { background-color: #007bff; }
+.red { background-color: #dc3545; }
+
+/* 基金代码颜色美化 */
+td:nth-child(2) {
+    color: #0066cc;
+    font-weight: 500;
+}
+
+/* 图例美化 */
+.legend {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 25px;
-    font-size: 14px;
+    gap: 25px;
+    margin-top: 30px;
+    font-size: 15px;
+    color: #555;
 }
-.legend-item{
+
+.legend-item {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
 }
-.legend-color{
-    width: 18px;
-    height: 18px;
-    border-radius: 3px;
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
 }
 </style>
 </head>
@@ -77,10 +153,10 @@ td.temp-cell {
   <tbody>
   {% for item in items %}
     <tr>
-      <td style="text-align:left">{{ item.name }}</td>
-      <td style="color:#0066ff">{{ item.etf }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.etf }}</td>
       <td>{{ item.lof }}</td>
-      <td class="temp-cell">
+      <td>
           {% if item.type == 'pb' %}
               <div class="temp-block blue">{{ item.lt }}</div>
           {% else %}
