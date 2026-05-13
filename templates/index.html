@@ -12,22 +12,26 @@ body{font-family:Microsoft YaHei;margin:20px;background:#fff}
 table{width:100%;border-collapse:collapse;margin-bottom:20px}
 td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
 .cate-name{text-align:left;font-weight:bold}
-.blue{background:#007bff;color:white}
-.red{background:#dc3545;color:white}
 
-/* 关键修改：固定温度列宽度，统一所有温度块长度 */
-td:last-child {
-    width: 120px; /* 固定宽度，和原图一致 */
+/* —————————— 核心修复：所有温度色块强制统一大小 —————————— */
+td.temp-cell {
+    width: 140px !important;       /* 固定温度列宽度 */
+    padding: 6px !important;
 }
-td.blue, td.red {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border-radius: 4px;
+.temp-block {
+    display: inline-block;
+    width: 130px !important;        /* 色块统一宽度 */
+    height: 32px !important;        /* 色块统一高度 */
+    line-height: 32px;              /* 文字垂直居中 */
+    text-align: center;             /* 文字水平居中 */
+    border-radius: 4px;             /* 圆角 */
+    color: white;
+    font-weight: normal;
 }
+.blue { background: #007bff; }
+.red { background: #dc3545; }
 
-/* 温度图例样式 */
+/* 图例样式 */
 .legend{
     display: flex;
     justify-content: center;
@@ -76,35 +80,24 @@ td.blue, td.red {
       <td style="text-align:left">{{ item.name }}</td>
       <td style="color:#0066ff">{{ item.etf }}</td>
       <td>{{ item.lof }}</td>
-      {% if item.type == 'pb' %}
-        <td class="blue">{{ item.lt }}</td>
-      {% else %}
-        <td class="red">{{ item.lt }}</td>
-      {% endif %}
+      <td class="temp-cell">
+          {% if item.type == 'pb' %}
+              <div class="temp-block blue">{{ item.lt }}</div>
+          {% else %}
+              <div class="temp-block red">{{ item.lt }}</div>
+          {% endif %}
+      </td>
     </tr>
   {% endfor %}
   </tbody>
 </table>
 {% endfor %}
 
-<!-- 底部温度区间图例 -->
 <div class="legend">
-    <div class="legend-item">
-        <div class="legend-color" style="background:#007bff;"></div>
-        <span>℃ ≤ 30</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#ffc107;"></div>
-        <span>30 < ℃ ≤ 40</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#fd7e14;"></div>
-        <span>40 < ℃ ≤ 50</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#dc3545;"></div>
-        <span>℃ > 50</span>
-    </div>
+    <div class="legend-item"><div class="legend-color" style="background:#007bff;"></div><span>℃ ≤ 30</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#ffc107;"></div><span>30 < ℃ ≤ 40</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#fd7e14;"></div><span>40 < ℃ ≤ 50</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>℃ > 50</span></div>
 </div>
 
 </div>

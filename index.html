@@ -12,22 +12,26 @@ body{font-family:Microsoft YaHei;margin:20px;background:#fff}
 table{width:100%;border-collapse:collapse;margin-bottom:20px}
 td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
 .cate-name{text-align:left;font-weight:bold}
-.blue{background:#007bff;color:white}
-.red{background:#dc3545;color:white}
 
-/* 关键修改：固定温度列宽度，统一所有温度块长度 */
-td:last-child {
-    width: 120px; /* 固定宽度，和原图一致 */
+/* —————————— 核心修复：所有温度色块强制统一大小 —————————— */
+td.temp-cell {
+    width: 140px !important;       /* 固定温度列宽度 */
+    padding: 6px !important;
 }
-td.blue, td.red {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    border-radius: 4px;
+.temp-block {
+    display: inline-block;
+    width: 130px !important;        /* 色块统一宽度 */
+    height: 32px !important;        /* 色块统一高度 */
+    line-height: 32px;              /* 文字垂直居中 */
+    text-align: center;             /* 文字水平居中 */
+    border-radius: 4px;             /* 圆角 */
+    color: white;
+    font-weight: normal;
 }
+.blue { background: #007bff; }
+.red { background: #dc3545; }
 
-/* 温度图例样式 */
+/* 图例样式 */
 .legend{
     display: flex;
     justify-content: center;
@@ -50,7 +54,7 @@ td.blue, td.red {
 <body>
 <div class="container">
 <div class="title">📈 指数估值温度表</div>
-<div class="time">更新时间：2026-05-13 00:56</div>
+<div class="time">更新时间：2026-05-13 00:59</div>
 
 
 
@@ -158,54 +162,66 @@ td.blue, td.red {
       <td style="text-align:left">上证50</td>
       <td style="color:#0066ff">510050</td>
       <td>001051</td>
-      
-        <td class="red">63.9</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">63.9</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">创业板指数</td>
       <td style="color:#0066ff">159915</td>
       <td>110026</td>
-      
-        <td class="red">66.0</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">66.0</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">沪深300</td>
       <td style="color:#0066ff">510300</td>
       <td>160706</td>
-      
-        <td class="red">74.5</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">74.5</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">中证1000</td>
       <td style="color:#0066ff">512100</td>
       <td>-</td>
-      
-        <td class="red">80.1</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">80.1</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">中证500</td>
       <td style="color:#0066ff">510500</td>
       <td>160119</td>
-      
-        <td class="red">85.0</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">85.0</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">中证全指</td>
       <td style="color:#0066ff">-</td>
       <td>-</td>
-      
-        <td class="red">86.5</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">86.5</div>
+          
+      </td>
     </tr>
   
   </tbody>
@@ -226,63 +242,77 @@ td.blue, td.red {
       <td style="text-align:left">基本面50</td>
       <td style="color:#0066ff">160716</td>
       <td>160716</td>
-      
-        <td class="red">61.0</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">61.0</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">中证红利</td>
       <td style="color:#0066ff">515890</td>
       <td>100032</td>
-      
-        <td class="red">61.7</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">61.7</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">深证红利</td>
       <td style="color:#0066ff">159905</td>
       <td>481012</td>
-      
-        <td class="red">70.8</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">70.8</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">500SNLV</td>
       <td style="color:#0066ff">-</td>
       <td>003318</td>
-      
-        <td class="red">73.1</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">73.1</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">基本面60</td>
       <td style="color:#0066ff">159916</td>
       <td>530015</td>
-      
-        <td class="red">73.4</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">73.4</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">红利指数</td>
       <td style="color:#0066ff">510880</td>
       <td>-</td>
-      
-        <td class="red">76.4</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">76.4</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">基本面120</td>
       <td style="color:#0066ff">159910</td>
       <td>070023</td>
-      
-        <td class="red">79.8</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">79.8</div>
+          
+      </td>
     </tr>
   
   </tbody>
@@ -303,54 +333,66 @@ td.blue, td.red {
       <td style="text-align:left">德国DAX</td>
       <td style="color:#0066ff">513030</td>
       <td>000614</td>
-      
-        <td class="red">61.0</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">61.0</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">国企指数</td>
       <td style="color:#0066ff">510900</td>
       <td>110031</td>
-      
-        <td class="red">76.1</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">76.1</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">恒生指数</td>
       <td style="color:#0066ff">159920</td>
       <td>164705</td>
-      
-        <td class="red">86.1</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">86.1</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">标普500</td>
       <td style="color:#0066ff">513500</td>
       <td>050025</td>
-      
-        <td class="red">93.0</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">93.0</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">日经225</td>
       <td style="color:#0066ff">513520</td>
       <td>-</td>
-      
-        <td class="red">93.2</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">93.2</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">纳斯达克100</td>
       <td style="color:#0066ff">-</td>
       <td>160213</td>
-      
-        <td class="red">93.6</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">93.6</div>
+          
+      </td>
     </tr>
   
   </tbody>
@@ -371,27 +413,33 @@ td.blue, td.red {
       <td style="text-align:left">中国互联网</td>
       <td style="color:#0066ff">164906</td>
       <td>164906</td>
-      
-        <td class="blue">6.2</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block blue">6.2</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">中国互联网50</td>
       <td style="color:#0066ff">513050</td>
       <td>006327</td>
-      
-        <td class="blue">7.7</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block blue">7.7</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">证券公司</td>
       <td style="color:#0066ff">512000</td>
       <td>004069</td>
-      
-        <td class="blue">18.6</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block blue">18.6</div>
+          
+      </td>
     </tr>
   
   </tbody>
@@ -412,9 +460,11 @@ td.blue, td.red {
       <td style="text-align:left">AUL9</td>
       <td style="color:#0066ff">518880</td>
       <td>000216</td>
-      
-        <td class="red">97.5</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">97.5</div>
+          
+      </td>
     </tr>
   
   </tbody>
@@ -435,42 +485,33 @@ td.blue, td.red {
       <td style="text-align:left">10年国债</td>
       <td style="color:#0066ff">511260</td>
       <td>-</td>
-      
-        <td class="red">93.9</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">93.9</div>
+          
+      </td>
     </tr>
   
     <tr>
       <td style="text-align:left">转债ETF</td>
       <td style="color:#0066ff">511380</td>
       <td>-</td>
-      
-        <td class="red">99.4</td>
-      
+      <td class="temp-cell">
+          
+              <div class="temp-block red">99.4</div>
+          
+      </td>
     </tr>
   
   </tbody>
 </table>
 
 
-<!-- 底部温度区间图例 -->
 <div class="legend">
-    <div class="legend-item">
-        <div class="legend-color" style="background:#007bff;"></div>
-        <span>℃ ≤ 30</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#ffc107;"></div>
-        <span>30 < ℃ ≤ 40</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#fd7e14;"></div>
-        <span>40 < ℃ ≤ 50</span>
-    </div>
-    <div class="legend-item">
-        <div class="legend-color" style="background:#dc3545;"></div>
-        <span>℃ > 50</span>
-    </div>
+    <div class="legend-item"><div class="legend-color" style="background:#007bff;"></div><span>℃ ≤ 30</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#ffc107;"></div><span>30 < ℃ ≤ 40</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#fd7e14;"></div><span>40 < ℃ ≤ 50</span></div>
+    <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>℃ > 50</span></div>
 </div>
 
 </div>
