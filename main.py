@@ -1,164 +1,64 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>指数估值温度表</title>
-<style>
-/* 全局美化 */
-body {
-    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-    margin: 20px;
-    background-color: #f0f2f5;
-}
-.container {
-    max-width: 950px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-}
-.title {
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-}
-.time {
-    text-align: center;
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 25px;
-}
+import pandas as pd
+from jinja2 import Environment, FileSystemLoader
+import os
 
-/* 表格美化 + 所有列居中 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 25px;
-}
-th, td {
-    padding: 14px 10px;
-    text-align: center; /* 核心：所有列居中对齐 */
-    border-bottom: 1px solid #eee;
-    font-size: 16px;
-}
-/* 指数名称列单独左对齐 */
-td:first-child {
-    text-align: left;
-    padding-left: 15px;
-}
-/* 表头样式 */
-th {
-    background-color: #f8f9fa;
-    font-weight: bold;
-    color: #333;
-}
-.cate-name {
-    text-align: left;
-    font-weight: bold;
-    color: #333;
-}
+if not os.path.exists("templates"):
+    os.makedirs("templates")
 
-/* 温度色块（保持之前的统一宽度） */
-td.temp-cell {
-    width: 140px !important;
-    padding: 6px !important;
-}
-.temp-block {
-    display: inline-block;
-    width: 130px !important;
-    height: 32px !important;
-    line-height: 32px;
-    text-align: center;
-    border-radius: 4px;
-    color: white;
-    font-weight: 500;
-}
-.blue { background-color: #007bff; }
-.red { background-color: #dc3545; }
+# 1:1 还原你原图的所有指数、代码、温度 + 新增境外指数 + 严格排序
+index_list = [
+    # 宽基指数
+    {"category": "宽基指数", "name": "上证50", "etf": "510050", "lof": "001051", "lt": 63.90, "type": "long"},
+    {"category": "宽基指数", "name": "创业板指数", "etf": "159915", "lof": "110026", "lt": 66.00, "type": "long"},
+    {"category": "宽基指数", "name": "沪深300", "etf": "510300", "lof": "160706", "lt": 74.50, "type": "long"},
+    {"category": "宽基指数", "name": "中证1000", "etf": "512100", "lof": "-", "lt": 80.10, "type": "long"},
+    {"category": "宽基指数", "name": "中证500", "etf": "510500", "lof": "160119", "lt": 85.00, "type": "long"},
+    {"category": "宽基指数", "name": "中证全指", "etf": "-", "lof": "-", "lt": 86.50, "type": "long"},
 
-/* 基金代码颜色美化 */
-td:nth-child(2) {
-    color: #0066cc;
-    font-weight: 500;
-}
-td:nth-child(3) {
-    color: #333;
-}
+    # 策略指数
+    {"category": "策略指数", "name": "基本面50", "etf": "160716", "lof": "160716", "lt": 61.00, "type": "long"},
+    {"category": "策略指数", "name": "中证红利", "etf": "515890", "lof": "100032", "lt": 61.70, "type": "long"},
+    {"category": "策略指数", "name": "深证红利", "etf": "159905", "lof": "481012", "lt": 70.80, "type": "long"},
+    {"category": "策略指数", "name": "500SNLV", "etf": "-", "lof": "003318", "lt": 73.10, "type": "long"},
+    {"category": "策略指数", "name": "基本面60", "etf": "159916", "lof": "530015", "lt": 73.40, "type": "long"},
+    {"category": "策略指数", "name": "红利指数", "etf": "510880", "lof": "-", "lt": 76.40, "type": "long"},
+    {"category": "策略指数", "name": "基本面120", "etf": "159910", "lof": "070023", "lt": 79.80, "type": "long"},
 
-/* 图例美化 */
-.legend {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    margin-top: 30px;
-    font-size: 15px;
-    color: #555;
-}
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.legend-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-}
-</style>
-</head>
-<body>
-<div class="container">
-<div class="title">📈 指数估值温度表</div>
-<div class="time">更新时间：{{ time }}</div>
+    # 境外指数 —— 已按你要求排序 + 新增指数
+    {"category": "境外指数", "name": "标普500", "etf": "513500", "lof": "050025", "lt": 93.00, "type": "long"},
+    {"category": "境外指数", "name": "纳斯达克100", "etf": "513100", "lof": "160213", "lt": 93.60, "type": "long"},
+    {"category": "境外指数", "name": "英国富时100", "etf": "-", "lof": "-", "lt": 78.50, "type": "long"},
+    {"category": "境外指数", "name": "德国DAX", "etf": "513030", "lof": "000614", "lt": 61.00, "type": "long"},
+    {"category": "境外指数", "name": "法国CAC40", "etf": "-", "lof": "-", "lt": 75.20, "type": "long"},
+    {"category": "境外指数", "name": "日经225", "etf": "513520", "lof": "000605", "lt": 93.20, "type": "long"},
+    {"category": "境外指数", "name": "国企指数", "etf": "510900", "lof": "110031", "lt": 76.10, "type": "long"},
+    {"category": "境外指数", "name": "恒生指数", "etf": "159920", "lof": "164705", "lt": 86.10, "type": "long"},
+    {"category": "境外指数", "name": "恒生科技", "etf": "513130", "lof": "014425", "lt": 68.50, "type": "long"},
 
-{% set groups = {} %}
-{% for r in rows %}
-    {% if r.category not in groups %}
-        {% set _ = groups.update({r.category: []}) %}
-    {% endif %}
-    {% set _ = groups[r.category].append(r) %}
-{% endfor %}
+    # 行业指数
+    {"category": "行业指数", "name": "中国互联网", "etf": "164906", "lof": "164906", "lt": 6.20, "type": "pb"},
+    {"category": "行业指数", "name": "中国互联网50", "etf": "513050", "lof": "006327", "lt": 7.70, "type": "pb"},
+    {"category": "行业指数", "name": "证券公司", "etf": "512000", "lof": "004069", "lt": 18.60, "type": "pb"},
 
-{% for category, items in groups.items() %}
-<table>
-  <thead>
-    <tr>
-      <th class="cate-name">{{ category }}</th>
-      <th>场内基金代码</th>
-      <th>场外基金代码</th>
-      <th>{% if category == '行业指数' %}PB温度{% else %}长投温度{% endif %}</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for item in items %}
-    <tr>
-      <td>{{ item.name }}</td>
-      <td>{{ item.etf }}</td>
-      <td>{{ item.lof }}</td>
-      <td class="temp-cell">
-          {% if item.type == 'pb' %}
-              <div class="temp-block blue">{{ item.lt }}</div>
-          {% else %}
-              <div class="temp-block red">{{ item.lt }}</div>
-          {% endif %}
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-{% endfor %}
+    # 商品指数
+    {"category": "商品指数", "name": "Aul9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
 
-<div class="legend">
-    <div class="legend-item"><div class="legend-color" style="background:#007bff;"></div><span>℃ ≤ 30</span></div>
-    <div class="legend-item"><div class="legend-color" style="background:#ffc107;"></div><span>30 < ℃ ≤ 40</span></div>
-    <div class="legend-item"><div class="legend-color" style="background:#fd7e14;"></div><span>40 < ℃ ≤ 50</span></div>
-    <div class="legend-item"><div class="legend-color" style="background:#dc3545;"></div><span>℃ > 50</span></div>
-</div>
+    # 债券指数
+    {"category": "债券指数", "name": "10年国债", "etf": "511260", "lof": "-", "lt": 93.90, "type": "long"},
+    {"category": "债券指数", "name": "转债ETF", "etf": "511380", "lof": "-", "lt": 99.40, "type": "long"},
+]
 
-</div>
-</body>
-</html>
+rows = index_list
+
+env = Environment(loader=FileSystemLoader("templates"))
+template = env.get_template("index.html")
+
+html = template.render(
+    time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
+    rows=rows
+)
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html)
+
+print("✅ 境外指数已新增+排序完成！")
