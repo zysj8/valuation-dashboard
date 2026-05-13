@@ -41,7 +41,7 @@ index_list = [
     {"category": "行业指数", "name": "证券公司", "etf": "512000", "lof": "004069", "lt": 18.60, "type": "pb"},
 
     # 商品指数
-    {"category": "商品指数", "name": "AUL9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
+    {"category": "商品指数", "name": "Aul9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
 
     # 债券指数
     {"category": "债券指数", "name": "10年国债", "etf": "511260", "lof": "-", "lt": 93.90, "type": "long"},
@@ -58,7 +58,7 @@ html = template.render(
     rows=rows
 )
 
-with open("index.html", "w", encoding="utf-8")
+with open("index.html", "w", encoding="utf-8") as f:
     f.write(html)
 
 print("✅ 境外指数已新增+排序完成！")
