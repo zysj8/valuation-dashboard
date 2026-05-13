@@ -36,9 +36,7 @@ th{background:#f2f2f2}
 <td>{{ r.name }}</td>
 <td>{{ r.etf }}</td>
 <td>{{ r.lof }}</td>
-{% if r.lt == '-' %}
-<td class="gray">-</td>
-{% elif r.lt <= 30 %}
+{% if r.lt <= 30 %}
 <td class="blue">{{ r.lt }}</td>
 {% elif r.lt <= 40 %}
 <td class="yellow">{{ r.lt }}</td>
