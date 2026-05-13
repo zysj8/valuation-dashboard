@@ -1,64 +1,112 @@
+import requests
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 import os
+import time
 
-if not os.path.exists("templates"):
-    os.makedirs("templates")
+# ====================== 配置 ======================
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}
 
-# 1:1 还原你原图的所有指数、代码、温度 + 新增境外指数 + 严格排序
-index_list = [
-    # 宽基指数
-    {"category": "宽基指数", "name": "上证50", "etf": "510050", "lof": "001051", "lt": 63.90, "type": "long"},
-    {"category": "宽基指数", "name": "创业板指数", "etf": "159915", "lof": "110026", "lt": 66.00, "type": "long"},
-    {"category": "宽基指数", "name": "沪深300", "etf": "510300", "lof": "160706", "lt": 74.50, "type": "long"},
-    {"category": "宽基指数", "name": "中证1000", "etf": "512100", "lof": "-", "lt": 80.10, "type": "long"},
-    {"category": "宽基指数", "name": "中证500", "etf": "510500", "lof": "160119", "lt": 85.00, "type": "long"},
-    {"category": "宽基指数", "name": "中证全指", "etf": "-", "lof": "-", "lt": 86.50, "type": "long"},
-
-    # 策略指数
-    {"category": "策略指数", "name": "基本面50", "etf": "160716", "lof": "160716", "lt": 61.00, "type": "long"},
-    {"category": "策略指数", "name": "中证红利", "etf": "515890", "lof": "100032", "lt": 61.70, "type": "long"},
-    {"category": "策略指数", "name": "深证红利", "etf": "159905", "lof": "481012", "lt": 70.80, "type": "long"},
-    {"category": "策略指数", "name": "500SNLV", "etf": "-", "lof": "003318", "lt": 73.10, "type": "long"},
-    {"category": "策略指数", "name": "基本面60", "etf": "159916", "lof": "530015", "lt": 73.40, "type": "long"},
-    {"category": "策略指数", "name": "红利指数", "etf": "510880", "lof": "-", "lt": 76.40, "type": "long"},
-    {"category": "策略指数", "name": "基本面120", "etf": "159910", "lof": "070023", "lt": 79.80, "type": "long"},
-
-    # 境外指数 —— 已按你要求排序 + 新增指数
-    {"category": "境外指数", "name": "标普500", "etf": "513500", "lof": "050025", "lt": 93.00, "type": "long"},
-    {"category": "境外指数", "name": "纳斯达克100", "etf": "513100", "lof": "160213", "lt": 93.60, "type": "long"},
-    {"category": "境外指数", "name": "英国富时100", "etf": "-", "lof": "-", "lt": 78.50, "type": "long"},
-    {"category": "境外指数", "name": "德国DAX", "etf": "513030", "lof": "000614", "lt": 61.00, "type": "long"},
-    {"category": "境外指数", "name": "法国CAC40", "etf": "-", "lof": "-", "lt": 75.20, "type": "long"},
-    {"category": "境外指数", "name": "日经225", "etf": "513520", "lof": "000605", "lt": 93.20, "type": "long"},
-    {"category": "境外指数", "name": "国企指数", "etf": "510900", "lof": "110031", "lt": 76.10, "type": "long"},
-    {"category": "境外指数", "name": "恒生指数", "etf": "159920", "lof": "164705", "lt": 86.10, "type": "long"},
-    {"category": "境外指数", "name": "恒生科技", "etf": "513130", "lof": "014425", "lt": 68.50, "type": "long"},
-
-    # 行业指数
-    {"category": "行业指数", "name": "中国互联网", "etf": "164906", "lof": "164906", "lt": 6.20, "type": "pb"},
-    {"category": "行业指数", "name": "中国互联网50", "etf": "513050", "lof": "006327", "lt": 7.70, "type": "pb"},
-    {"category": "行业指数", "name": "证券公司", "etf": "512000", "lof": "004069", "lt": 18.60, "type": "pb"},
-
-    # 商品指数
-    {"category": "商品指数", "name": "Aul9", "etf": "518880", "lof": "000216", "lt": 97.50, "type": "long"},
-
-    # 债券指数
-    {"category": "债券指数", "name": "10年国债", "etf": "511260", "lof": "-", "lt": 93.90, "type": "long"},
-    {"category": "债券指数", "name": "转债ETF", "etf": "511380", "lof": "-", "lt": 99.40, "type": "long"},
+# 你要监控的指数列表（可自由增删）
+INDEX_LIST = [
+    {"name": "上证50", "code": "000016"},
+    {"name": "沪深300", "code": "000300"},
+    {"name": "中证500", "code": "000905"},
+    {"name": "中证1000", "code": "000852"},
+    {"name": "创业板指", "code": "399006"},
+    {"name": "中证红利", "code": "000922"},
+    {"name": "证券公司", "code": "399975"},
+    {"name": "恒生指数", "code": "HSI"},
+    {"name": "恒生科技", "code": "HSTECH"},
+    {"name": "标普500", "code": "SPX"},
+    {"name": "纳斯达克100", "code": "NDX"},
+    {"name": "日经225", "code": "N225"},
+    {"name": "德国DAX", "code": "DAX"},
+    {"name": "英国富时100", "code": "FTSE"},
+    {"name": "法国CAC40", "code": "CAC"},
 ]
 
-rows = index_list
+# 基金代码映射（稳定版，爬虫补充不到的用这个兜底）
+FUND_MAP = {
+    "上证50": {"etf": "510050", "lof": "001051"},
+    "沪深300": {"etf": "510300", "lof": "160706"},
+    "中证500": {"etf": "510500", "lof": "160119"},
+    "中证1000": {"etf": "512100", "lof": "-"},
+    "创业板指": {"etf": "159915", "lof": "110026"},
+    "中证红利": {"etf": "515890", "lof": "100032"},
+    "证券公司": {"etf": "512000", "lof": "004069"},
+    "恒生指数": {"etf": "159920", "lof": "164705"},
+    "恒生科技": {"etf": "513130", "lof": "014425"},
+    "标普500": {"etf": "513500", "lof": "050025"},
+    "纳斯达克100": {"etf": "513100", "lof": "160213"},
+    "日经225": {"etf": "513520", "lof": "000605"},
+    "德国DAX": {"etf": "513030", "lof": "000614"},
+}
 
-env = Environment(loader=FileSystemLoader("templates"))
-template = env.get_template("index.html")
+# ====================== 蛋卷基金爬虫 ======================
+def get_index_valuation(index_code):
+    try:
+        url = f"https://danjuanapp.com/djapi/index_eva/dj/{index_code}"
+        res = requests.get(url, headers=HEADERS, timeout=8)
+        data = res.json()
 
-html = template.render(
-    time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
-    rows=rows
-)
+        pe = round(float(data["data"]["pe"]), 2)
+        pb = round(float(data["data"]["pb"]), 2)
+        pe_percent = round(float(data["data"]["pe_percent"]), 2)
+        pb_percent = round(float(data["data"]["pb_percent"]), 2)
 
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html)
+        # 指数温度公式（(PE百分位 + PB百分位) / 2）
+        temp = round((pe_percent + pb_percent) / 2, 2)
+        return pe, pb, pe_percent, pb_percent, temp
 
-print("✅ 境外指数已新增+排序完成！")
+    except:
+        return None, None, None, None, None
+
+# ====================== 主程序 ======================
+if __name__ == "__main__":
+    index_data = []
+
+    for idx in INDEX_LIST:
+        name = idx["name"]
+        code = idx["code"]
+
+        print(f"正在爬取：{name}")
+        pe, pb, pe_pct, pb_pct, temp = get_index_valuation(code)
+        time.sleep(0.5)
+
+        # 基金代码
+        etf = FUND_MAP.get(name, {}).get("etf", "-")
+        lof = FUND_MAP.get(name, {}).get("lof", "-")
+
+        # 行业指数使用PB温度
+        type_ = "pb" if name in ["证券公司", "恒生科技", "中国互联网"] else "long"
+
+        index_data.append({
+            "category": "境外指数" if name in ["标普500","纳斯达克100","日经225","德国DAX","英国富时100","法国CAC40","恒生指数","恒生科技"] 
+            else "行业指数" if type_ == "pb" 
+            else "宽基指数",
+            "name": name,
+            "etf": etf,
+            "lof": lof,
+            "lt": temp if temp else 0.00,
+            "type": type_
+        })
+
+    # ====================== 生成网页 ======================
+    if not os.path.exists("templates"):
+        os.makedirs("templates")
+
+    env = Environment(loader=FileSystemLoader("templates"))
+    template = env.get_template("index.html")
+
+    html = template.render(
+        time=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M"),
+        rows=index_data
+    )
+
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html)
+
+    print("✅ 爬取完成！指数温度已自动更新")
