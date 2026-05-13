@@ -41,7 +41,7 @@ body {
     margin-bottom: 25px;
 }
 
-/* 关键：固定表格布局，列宽用像素精准控制 */
+/* 表格核心：等间距列宽设置 */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -49,11 +49,11 @@ table {
     table-layout: fixed;
 }
 
-/* 像素级精准列宽，和你原图比例一致 */
-th:nth-child(1), td:nth-child(1) { width: 280px; } /* 指数名称列 */
-th:nth-child(2), td:nth-child(2) { width: 200px; } /* 场内代码列 */
-th:nth-child(3), td:nth-child(3) { width: 200px; } /* 场外代码列 */
-th:nth-child(4), td:nth-child(4) { width: 220px; } /* 温度列 */
+/* 四列等间距设置，保证三个间距完全一致 */
+th:nth-child(1), td:nth-child(1) { width: 25%; }
+th:nth-child(2), td:nth-child(2) { width: 25%; }
+th:nth-child(3), td:nth-child(3) { width: 25%; }
+th:nth-child(4), td:nth-child(4) { width: 25%; }
 
 th, td {
     padding: 14px 10px;
