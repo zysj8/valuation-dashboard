@@ -5,416 +5,753 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>指数估值温度表</title>
 <style>
-body{font-family:Microsoft YaHei;margin:20px;background:#f6f7f9}
-.container{max-width:900px;margin:auto;background:white;padding:15px;border-radius:10px}
+body{font-family:Microsoft YaHei;margin:20px;background:#fff}
+.container{max-width:900px;margin:auto;background:#fff;padding:0}
 .title{text-align:center;font-size:22px;margin-bottom:5px}
 .time{text-align:center;color:#666;margin-bottom:15px}
-table{width:100%;border-collapse:collapse}
-td,th{padding:10px;text-align:center;border-bottom:1px solid #eee}
-th{background:#f2f2f2}
-.cate{background:#eef2f5;font-weight:bold;text-align:left}
+table{width:100%;border-collapse:collapse;margin-bottom:20px}
+td,th{padding:12px;text-align:center;border-bottom:1px solid #eee}
+/* 分类表头样式 */
+.cate-header th{background:#fff;text-align:left;font-weight:normal;padding:12px 0;border-bottom:1px solid #eee}
+.cate-name{text-align:left;font-weight:bold}
+/* 温度颜色规则 */
 .blue{background:#007bff;color:white}
 .yellow{background:#ffc107}
 .orange{background:#fd7e14;color:white}
 .red{background:#dc3545;color:white}
-.gray{background:#f2f2f2}
+/* 图例样式 */
+.legend{display:flex;justify-content:center;gap:20px;margin-top:30px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-box{width:20px;height:20px;display:inline-block}
 </style>
 </head>
 <body>
 <div class="container">
-<div class="title">📈 指数估值温度表（长投温度）</div>
-<div class="time">更新时间：2026-05-13 00:36</div>
+<div class="title">📈 指数估值温度表</div>
+<div class="time">更新时间：2026-05-13 00:37</div>
 
-<table>
-  <thead>
+
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
     <tr>
-      <th>指数名称</th>
-      <th>场内基金代码</th>
-      <th>场外基金代码</th>
-      <th>指数温度</th>
+        <td style="text-align:left">上证50</td>
+        <td style="color:#66a3ff">510050</td>
+        <td>001051</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">63.9</td>
+            
+        
     </tr>
-  </thead>
-  <tbody>
-
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>上证50</td>
-<td>510050</td>
-<td>001051</td>
-
-<td class="red">63.9</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>创业板指数</td>
-<td>159915</td>
-<td>110026</td>
-
-<td class="red">66.0</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>沪深300</td>
-<td>510300</td>
-<td>160706</td>
-
-<td class="red">74.5</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>中证1000</td>
-<td>512100</td>
-<td>-</td>
-
-<td class="red">80.1</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>中证500</td>
-<td>510500</td>
-<td>160119</td>
-
-<td class="red">85.0</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">宽基指数</td></tr>
-
-
-<tr>
-<td>中证全指</td>
-<td>-</td>
-<td>-</td>
-
-<td class="red">86.5</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>基本面50</td>
-<td>160716</td>
-<td>160716</td>
-
-<td class="red">61.0</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>中证红利</td>
-<td>515890</td>
-<td>100032</td>
-
-<td class="red">61.7</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>深证红利</td>
-<td>159905</td>
-<td>481012</td>
-
-<td class="red">70.8</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>500SNLV</td>
-<td>-</td>
-<td>003318</td>
-
-<td class="red">73.1</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>基本面60</td>
-<td>159916</td>
-<td>530015</td>
-
-<td class="red">73.4</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>红利指数</td>
-<td>510880</td>
-<td>-</td>
-
-<td class="red">76.4</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">策略指数</td></tr>
-
-
-<tr>
-<td>基本面120</td>
-<td>159910</td>
-<td>070023</td>
-
-<td class="red">79.8</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>德国DAX</td>
-<td>513030</td>
-<td>000614</td>
-
-<td class="red">61.0</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>国企指数</td>
-<td>510900</td>
-<td>110031</td>
-
-<td class="red">76.1</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>恒生指数</td>
-<td>159920</td>
-<td>164705</td>
-
-<td class="red">86.1</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>标普500</td>
-<td>513500</td>
-<td>050025</td>
-
-<td class="red">93.0</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>日经225</td>
-<td>513520</td>
-<td>-</td>
-
-<td class="red">93.2</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">境外指数</td></tr>
-
-
-<tr>
-<td>纳斯达克100</td>
-<td>-</td>
-<td>160213</td>
-
-<td class="red">93.6</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">行业指数</td></tr>
-
-
-<tr>
-<td>中国互联网</td>
-<td>164906</td>
-<td>164906</td>
-
-<td class="blue">6.2</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">行业指数</td></tr>
-
-
-<tr>
-<td>中国互联网50</td>
-<td>513050</td>
-<td>006327</td>
-
-<td class="blue">7.7</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">行业指数</td></tr>
-
-
-<tr>
-<td>证券公司</td>
-<td>512000</td>
-<td>004069</td>
-
-<td class="blue">18.6</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">商品指数</td></tr>
-
-
-<tr>
-<td>AUL9</td>
-<td>518880</td>
-<td>000216</td>
-
-<td class="red">97.5</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">债券指数</td></tr>
-
-
-<tr>
-<td>10年国债</td>
-<td>511260</td>
-<td>-</td>
-
-<td class="red">93.9</td>
-
-</tr>
-
-
-
-
-<tr><td colspan="4" class="cate">债券指数</td></tr>
-
-
-<tr>
-<td>转债ETF</td>
-<td>511380</td>
-<td>-</td>
-
-<td class="red">99.4</td>
-
-</tr>
-
-
-</tbody>
-</table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">创业板指数</td>
+        <td style="color:#66a3ff">159915</td>
+        <td>110026</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">66.0</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">沪深300</td>
+        <td style="color:#66a3ff">510300</td>
+        <td>160706</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">74.5</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中证1000</td>
+        <td style="color:#66a3ff">512100</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">80.1</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中证500</td>
+        <td style="color:#66a3ff">510500</td>
+        <td>160119</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">85.0</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">宽基指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中证全指</td>
+        <td style="color:#66a3ff">-</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">86.5</td>
+            
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">基本面50</td>
+        <td style="color:#66a3ff">160716</td>
+        <td>160716</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">61.0</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中证红利</td>
+        <td style="color:#66a3ff">515890</td>
+        <td>100032</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">61.7</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">深证红利</td>
+        <td style="color:#66a3ff">159905</td>
+        <td>481012</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">70.8</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">500SNLV</td>
+        <td style="color:#66a3ff">-</td>
+        <td>003318</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">73.1</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">基本面60</td>
+        <td style="color:#66a3ff">159916</td>
+        <td>530015</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">73.4</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">红利指数</td>
+        <td style="color:#66a3ff">510880</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">76.4</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">策略指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">基本面120</td>
+        <td style="color:#66a3ff">159910</td>
+        <td>070023</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">79.8</td>
+            
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">德国DAX</td>
+        <td style="color:#66a3ff">513030</td>
+        <td>000614</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">61.0</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">国企指数</td>
+        <td style="color:#66a3ff">510900</td>
+        <td>110031</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">76.1</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">恒生指数</td>
+        <td style="color:#66a3ff">159920</td>
+        <td>164705</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">86.1</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">标普500</td>
+        <td style="color:#66a3ff">513500</td>
+        <td>050025</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">93.0</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">日经225</td>
+        <td style="color:#66a3ff">513520</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">93.2</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">境外指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">纳斯达克100</td>
+        <td style="color:#66a3ff">-</td>
+        <td>160213</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">93.6</td>
+            
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">行业指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>PB温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中国互联网</td>
+        <td style="color:#66a3ff">164906</td>
+        <td>164906</td>
+        
+            <!-- 行业指数用蓝色显示PB温度 -->
+            <td class="blue">6.2</td>
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">行业指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>PB温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">中国互联网50</td>
+        <td style="color:#66a3ff">513050</td>
+        <td>006327</td>
+        
+            <!-- 行业指数用蓝色显示PB温度 -->
+            <td class="blue">7.7</td>
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">行业指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>PB温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">证券公司</td>
+        <td style="color:#66a3ff">512000</td>
+        <td>004069</td>
+        
+            <!-- 行业指数用蓝色显示PB温度 -->
+            <td class="blue">18.6</td>
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">商品指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">AUL9</td>
+        <td style="color:#66a3ff">518880</td>
+        <td>000216</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">97.5</td>
+            
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">债券指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">10年国债</td>
+        <td style="color:#66a3ff">511260</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">93.9</td>
+            
+        
+    </tr>
+    
+
+    
+        
+        <!-- 每个分类单独的表头，和原图一致 -->
+        <table>
+          <thead>
+            <tr class="cate-header">
+              <th class="cate-name">债券指数</th>
+              <th>场内基金代码</th>
+              <th>场外基金代码</th>
+              <th>长投温度</th>
+            </tr>
+          </thead>
+          <tbody>
+    
+    <!-- 指数数据行 -->
+    <tr>
+        <td style="text-align:left">转债ETF</td>
+        <td style="color:#66a3ff">511380</td>
+        <td>-</td>
+        
+            <!-- 其他指数用温度颜色规则 -->
+            
+                <td class="red">99.4</td>
+            
+        
+    </tr>
+    
+        </tbody>
+        </table>
+    
+
+
+<!-- 底部图例 -->
+<div class="legend">
+    <div class="legend-item"><span class="legend-box" style="background:#007bff"></span>℃ ≤ 30</div>
+    <div class="legend-item"><span class="legend-box" style="background:#ffc107"></span>30 < ℃ ≤ 40</div>
+    <div class="legend-item"><span class="legend-box" style="background:#fd7e14"></span>40 < ℃ ≤ 50</div>
+    <div class="legend-item"><span class="legend-box" style="background:#dc3545"></span>℃ > 50</div>
+</div>
 
 </div>
 </body>
